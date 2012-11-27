@@ -23,7 +23,7 @@ The command is (provided you're in ~/.vim):
 >
     git submodule add git://github.com/AndrewRadev/simple_bookmarks.vim.git bundle/simple_bookmarks
 <
-Another way is to simply copy all the essential directories inside the ~.vim/
+Another way is to simply copy all the essential directories inside the ~/.vim
 directory: plugin, autoload, doc.
 
 ==============================================================================
@@ -72,6 +72,7 @@ SETTINGS                                           *simple-bookmarks-settings*
 
 These are the variables that control the behaviour of the plugin.
 
+
                                                  *g:simple_bookmarks_filename*
 >
     let g:simple_bookmarks_filename = '~/.vim_bookmarks'
@@ -82,15 +83,74 @@ Default value: '~/.vim_bookmarks'
 This variable is the name of the file that stores the bookmarks. The actual
 storage format is:
 >
-    bookmark name \t /path/to/file \t bufnum:lnum:col:off
+    bookmark name \t /path/to/file \t bufnum:lnum:col:off \t bookmarked line
 <
-In words, the three parts of a bookmark are tab-delimited, and the last one,
-describing the cursor position, contains numbers that are colon-delimited.
+In words, the four parts of a bookmark are tab-delimited, and the
+second-to-last one, describing the cursor position, contains numbers that are
+colon-delimited.
+
+
+                                            *g:simple_bookmarks_long_quickfix*
+>
+    let g:simple_bookmarks_long_quickfix = 0
+<
+
+Default value: 0
+
+The actual contents of the line are shown next to the bookmark's name. Setting
+this variable to 1 would make them go underneath the line instead, making it
+more readable, but possibly a bit more difficult to navigate.
+
+
+                                                    *g:simple_bookmarks_signs*
+>
+    let g:simple_bookmarks_signs = 0
+<
+
+Default value: 0
+
+Setting this variable to 1 would make the plugin place "->" signs on
+bookmarked lines.
+
+
+                                                *g:simple_bookmarks_highlight*
+                                                *SimpleBookmark*
+>
+    let g:simple_bookmarks_highlight = 0
+<
+
+Default value: 0
+
+Setting this variable to 1 would make the plugin highlight bookmarked lines.
+The syntax group that's highlighted is |SimpleBookmark| and it's linked to
+|Search| by default. If you want to customize it, you can use Vim's built-in
+|:highlight| command.
+
+                                               *g:simple_bookmarks_auto_close*
+>
+    let g:simple_bookmarks_auto_close = 1
+<
+
+Default value: 1
+
+If this variable is set to 1, the plugin will automatically close the quickfix
+window whenever a bookmark is chosen from it. Setting it to 0 disables this
+special behaviour and leaves the quickfix window open.
+
+
+                                                  *g:simple_bookmarks_new_tab*
+>
+    let g:simple_bookmarks_new_tab = 1
+<
+
+Default value: 0
+
+If this variable is set to 1, the plugin will open bookmarks in a new tab
+instead of using the standard quickfix window behaviour.
 
 ==============================================================================
 ISSUES                                               *simple-bookmarks-issues*
 
-- Still not tested for performance problems or race issues.
 - Deletion doesn't prompt before removing a bookmark. Maybe it should.
 - The storage mechanism is dead simple and it's possible to break it, though
   it seems unlikely.
